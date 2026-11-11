@@ -15,11 +15,13 @@ test("the examples list loads from the mock API and opens a detail page", async 
 
 test("the status filter and the search narrow the list through the URL", async ({ page }) => {
   await page.goto(`${APP}/en/examples?status=archived`);
-  await expect(page.getByRole("list").getByRole("listitem").first()).toBeVisible();
-  for (const badge of await page.getByRole("list").getByText("Archived").all()) {
-    await expect(badge).toBeVisible();
-  }
+  const items = page.getByRole("list").getByRole("listitem");
+  await expect(items.first()).toBeVisible();
+  await expect(items.first().getByText("Archived")).toBeVisible();
+  await expect(items.getByText("Draft")).toHaveCount(0);
+
+  await page.goto(`${APP}/en/examples`);
   await page.getByLabel("Search").fill("getting");
   await expect(page).toHaveURL(/search=getting/);
-  await expect(page.getByRole("list").getByRole("listitem")).toHaveCount(1);
+  await expect(items).toHaveCount(1);
 });
