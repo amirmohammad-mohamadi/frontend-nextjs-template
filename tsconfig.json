@@ -4,7 +4,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
     "moduleResolution": "bundler",
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strict": true,
     "noEmit": true,
     "isolatedModules": true,
@@ -19,7 +19,11 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "types": ["node", "jest"],
-    "plugins": [{ "name": "next" }],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
@@ -44,7 +48,8 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "types/**/*.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules", ".next", "e2e", "tools"]
 }

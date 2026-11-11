@@ -8,8 +8,9 @@
  *   npm run generate:domain -- product
  *   npm run generate:domain -- blog-post --plural=blog-posts --endpoint=/api/v1/posts --page=false
  *
- * Templates live in `tools/generators/domain/files`: `__name__` in a path and
- * `<%= name %>` in a file are replaced with the substitutions below.
+ * Templates live in `tools/generators/domain/files` (`src/` for the layers,
+ * `page/` for the list page): `__name__` in a path and `<%= name %>` in a
+ * file are replaced with the substitutions below.
  */
 import { execSync } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
@@ -77,7 +78,8 @@ function render(text) {
 }
 
 function renderPath(path) {
-  return render(path.replace(/__(\w+?)__/g, (_, key) => `<%= ${key} %>`)).replace(/__tmpl__$/, "");
+  const withoutSuffix = path.replace(/__tmpl__$/, "");
+  return render(withoutSuffix.replace(/__(\w+?)__/g, (_, key) => `<%= ${key} %>`));
 }
 
 function* walk(dir) {
@@ -88,10 +90,11 @@ function* walk(dir) {
   }
 }
 
-function generateFiles(sourceDir) {
+/** Renders every template under `sourceDir`; the target path is the template's path relative to `base`. */
+function generateFiles(sourceDir, base) {
   if (!existsSync(sourceDir)) return;
   for (const file of walk(sourceDir)) {
-    const target = renderPath(relative(sourceDir, file)).replace(/\\/g, "/");
+    const target = renderPath(relative(base, file)).replace(/\\/g, "/");
     if (existsSync(abs(target))) {
       log("exists", target);
       continue;
@@ -137,8 +140,8 @@ function addMessages(path, key, strings) {
 }
 
 // ── run ──────────────────────────────────────────────────────────────────────
-generateFiles(join(templates, "src"));
-if (withPage) generateFiles(join(templates, "page"));
+generateFiles(join(templates, "src"), templates);
+if (withPage) generateFiles(join(templates, "page"), join(templates, "page"));
 
 addExport("src/shared/dtos/index.ts", `export * from "./${n.fileName}";`);
 addExport("src/shared/models/index.ts", `export * from "./${n.fileName}";`);
