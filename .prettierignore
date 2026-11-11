@@ -1,0 +1,10 @@
+dist
+coverage
+.next
+out
+node_modules
+package-lock.json
+*.tsbuildinfo
+playwright-report
+test-results
+*__tmpl__

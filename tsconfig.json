@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "jsx": "preserve",
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "types": ["node", "jest"],
+    "plugins": [{ "name": "next" }],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@utils": ["src/shared/utils/index.ts"],
+      "@utils/*": ["src/shared/utils/*"],
+      "@components": ["src/shared/components/index.ts"],
+      "@components/*": ["src/shared/components/*"],
+      "@models": ["src/shared/models/index.ts"],
+      "@models/*": ["src/shared/models/*"],
+      "@dtos": ["src/shared/dtos/index.ts"],
+      "@dtos/*": ["src/shared/dtos/*"],
+      "@services": ["src/shared/services/index.ts"],
+      "@services/*": ["src/shared/services/*"],
+      "@assets": ["src/shared/assets/index.ts"],
+      "@assets/*": ["src/shared/assets/*"],
+      "@enums": ["src/shared/enums/index.ts"],
+      "@enums/*": ["src/shared/enums/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "types/**/*.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", ".next", "e2e", "tools"]
+}
