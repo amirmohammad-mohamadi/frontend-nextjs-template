@@ -1,0 +1,6 @@
+# Keep LF everywhere so Prettier (endOfLine: lf) agrees with git on every OS.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.woff2 binary
+*.ico binary
