@@ -32,9 +32,13 @@ const patterns = [
     regex: new RegExp(p.pattern, "i"),
     reason: p.reason,
   })),
+  // A local entry wrapped in slashes (`/\brials?\b/`) is a regular expression; anything else is a literal word.
   ...extraWords.map((w) => ({
     source: w,
-    regex: new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
+    regex:
+      w.length > 2 && w.startsWith("/") && w.endsWith("/")
+        ? new RegExp(w.slice(1, -1), "i")
+        : new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i"),
     reason: "forbidden word",
   })),
 ];
